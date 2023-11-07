@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angulartourofheroes-6c9f9": {
+      "hosting": {
+        "angular-tour-of-heroes-marrott": [
+          "angulartourofheroes-6c9f9"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angulartourofheroes-6c9f9"
+  }
+}

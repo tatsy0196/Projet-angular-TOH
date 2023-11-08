@@ -3,6 +3,7 @@ import { Hero } from '../data/hero';
 import { HeroService } from '../service/hero.service';
 import { MessageService } from '../service/message.service';
 import { Router } from '@angular/router';
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class HeroesComponent implements OnInit {
 
   selectedHero?: Hero;
+  subscriptionGetHeroes?: Subscription;
 
   heroes: Hero[] = [];
 
@@ -24,8 +26,8 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroService.getHeroes()
-    .subscribe(heroes => this.heroes = heroes);
+    this.subscriptionGetHeroes =
+        this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
   createHero(): void {
@@ -34,6 +36,12 @@ export class HeroesComponent implements OnInit {
         this.router.navigate(['detail/' + h.id]);
       })
 
+  }
+  ngOnDestroy(): void {
+
+    // Utilisation du cycle de vie du composant pour unsubscribe
+    console.log("Destroy heroes component");
+    this.subscriptionGetHeroes?.unsubscribe();
   }
 
 }

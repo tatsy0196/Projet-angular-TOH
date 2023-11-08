@@ -36,5 +36,6 @@
   <label *ngIf="checkStatIsNotOk()" class="error">Vous avez utilisé plus de 40 points de compétences </label> <br>
   <button id="save"  type="button" (click)="save()" [disabled]="checkStatIsNotOk()" >save</button>
   <button  type="button" (click)="goBack()">go back</button>
+  <button  type="button" (click)="delete()">delete</button>
 
 </div>

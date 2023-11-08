@@ -72,6 +72,10 @@ export class HeroService {
     return updateDoc(heroDocument, HeroService.transformationToJSON(hero));
   }
 
+
+
+
+
   deleteHero(id: string): Promise<void> {
 
     // Récupération du DocumentReference

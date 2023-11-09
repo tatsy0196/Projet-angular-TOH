@@ -33,7 +33,7 @@ export class HeroesComponent implements OnInit {
   createHero(): void {
     this.heroService.addHero()
       .then(h => {
-        this.router.navigate(['detail/' + h.id]);
+        this.router.navigate(['heroDetail/' + h.id]);
       })
 
   }

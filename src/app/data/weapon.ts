@@ -1,26 +1,26 @@
 export class Weapon {
-  id: string;
+  id: string | undefined;
   name: string;
   attaque: number;
   esquive: number;
   degats: number ;
-  pv: number;
+  PV: number;
 
-  constructor(id: string = "id_test", name: string = "brindille", attaque: number = 0, esquive: number = 0, degats: number = 0, pv: number = 0) {
+  constructor(id: string = "id_test", name: string = "brindille", attaque: number = 0, esquive: number = 0, degats: number = 0, PV: number = 0) {
   this.id = id;
   this.name = name;
   this.attaque = attaque;
   this.esquive = esquive;
   this.degats = degats;
-  this.pv = pv;
+  this.PV = PV;
 }
 
 isValide(): boolean {
   return  (this.attaque >= 0)
       && (this.esquive >= 0)
       && (this.degats >= 0)
-      && (this.pv >= 0)
-      && (this.attaque + this.esquive + this.degats + this.pv) <= 0 ;
+      && (this.PV >= 0)
+      && (this.attaque + this.esquive + this.degats + this.PV) <= 0 ;
 }
 
 

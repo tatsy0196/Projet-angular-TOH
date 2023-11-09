@@ -2,7 +2,7 @@
 <ul class="heroes">
   <button id="createHeroes" (click)="createHero()"> Create hero</button>
   <li *ngFor="let hero of heroes">
-    <a routerLink="/detail/{{hero.id}}">
+    <a routerLink="/heroDetail/{{hero.id}}">
       <span class="badge">{{hero.id}}</span> {{hero.name}}
     </a>
   </li>

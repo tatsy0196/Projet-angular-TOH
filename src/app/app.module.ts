@@ -13,6 +13,7 @@ import { WeaponsComponent } from './weapons/weapons.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    WeaponsComponent
+    WeaponsComponent,
+    WeaponDetailComponent
   ],
   imports: [
     BrowserModule,

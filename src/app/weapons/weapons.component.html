@@ -1,1 +1,9 @@
-<p>weapons works!</p>
+<h2>My weapons</h2>
+<ul class="Weapons">
+    <button id="createweapons" (click)="createWeapon()"> Create weapons</button>
+    <li *ngFor="let weapon of weapons">
+        <a routerLink="/weaponDetail/{{weapon.id}}">
+            <span class="badge">{{weapon.id}}</span> {{weapon.name}}
+        </a>
+    </li>
+</ul>

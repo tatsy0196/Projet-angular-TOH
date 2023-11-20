@@ -4,6 +4,7 @@ import {addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, 
 import {map, Observable} from "rxjs";
 import {DocumentData} from "rxfire/firestore/interfaces";
 import {Weapon} from "../data/weapon";
+import {Hero} from "../data/hero";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,18 @@ export class WeaponService {
         }))) as Observable<Weapon[]>;
   }
 
+  getWeapon(id: string): Observable<Weapon> {
+
+    // Récupération du DocumentReference
+    const heroDocument = doc(this.firestore, WeaponService.url + "/" + id);
+
+    ///////////
+    // Solution 2 : Transformation en un objet de type Hero
+    return docData(heroDocument, { idField: 'id' }).pipe(     //  add id in doc data
+        map( (heroDocumentData) => {
+          return WeaponService.transformationToWeapon(heroDocumentData);
+        })) as Observable<Weapon>;
+  }
 
   addWeapon(): Promise<Weapon> {
 

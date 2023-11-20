@@ -39,7 +39,7 @@ export class WeaponsComponent implements OnInit{
   ngOnDestroy(): void {
 
     // Utilisation du cycle de vie du composant pour unsubscribe
-    console.log("Destroy heroes component");
+    console.log("Destroy weapons component");
     this.subscriptionGetHeroes?.unsubscribe();
   }
 

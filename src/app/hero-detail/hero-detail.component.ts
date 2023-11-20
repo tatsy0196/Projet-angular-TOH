@@ -3,7 +3,6 @@ import { Hero } from '../data/hero';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../service/hero.service';
-import { FormControl } from '@angular/forms';
 import {subscriptionLogsToBeFn} from "rxjs/internal/testing/TestScheduler";
 import {first} from "rxjs";
 @Component({
@@ -36,11 +35,10 @@ export class HeroDetailComponent implements OnInit {
 
     getHero(): void {
         const id = String(this.route.snapshot.paramMap.get('id'));
-        this.subGetHero = this.heroService.getHero(id).pipe(first())
+        this.subGetHero = this.heroService.getHero(id).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
             .subscribe(hero => {
             this.hero = hero
             console.log(hero)
-            console.log(this.hero?.attaque)
             this.attaque = this.hero?.attaque || 10;
             this.esquive = this.hero?.esquive || 10;
             this.degats = this.hero?.degats || 10;

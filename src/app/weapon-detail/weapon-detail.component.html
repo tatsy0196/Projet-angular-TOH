@@ -1,1 +1,33 @@
-<p>weapon-detail works!</p>
+<form [formGroup]="weaponForm" (ngSubmit)="save()">
+    <label for="hero-name">Hero name:</label>
+    <input type="text" id="hero-name" formControlName="name" placeholder="name">
+
+    <div id="divAttaque">
+      <label for="hero-attaque">Hero attaque: </label>
+      <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
+        <input id="hero-attaque" value="attaque" matSliderThumb>
+      </mat-slider>
+    </div>
+    <div id="divEsquive">
+      <label for="hero-esquive">Hero esquive: </label>
+      <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
+        <input id="hero-esquive" value="esquive" matSliderThumb>
+      </mat-slider>
+    </div>
+    <div id="divDegat">
+      <label for="hero-degats">Hero degats: </label>
+      <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
+        <input id="hero-degats" value="degats" matSliderThumb>
+      </mat-slider>
+    </div>
+    <div id="divId">
+      <label for="hero-pv">Hero pv: </label>
+      <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
+        <input id="hero-pv" value="pv" matSliderThumb>
+      </mat-slider>
+      <!-- Utilisez des contrôles du formulaire réaz"ctif pour les autres champs -->
+    </div>
+      <button id="save" type="submit" [disabled]="!weaponForm.valid">Save</button>
+      <button type="button" (click)="goBack()">Go back</button>
+      <button type="button" (click)="delete()">Delete</button>
+</form>

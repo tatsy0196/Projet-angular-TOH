@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'heroDetail/:id', component: HeroDetailComponent },
-  { path: 'WeaponDetail/:id', component: WeaponDetailComponent },
+  { path: 'weaponDetail/:id', component: WeaponDetailComponent },
 
 ];
 @NgModule({

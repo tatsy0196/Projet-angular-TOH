@@ -36,7 +36,7 @@ export class HeroService {
 
     ///////////
     // Solution 2 : Transformation en un objet de type Hero
-    return docData(heroDocument, { idField: 'id' }).pipe(     // Ajout de l'id dans le document data
+    return docData(heroDocument, { idField: 'id' }).pipe(     //  add id in doc data
       map( (heroDocumentData) => {
         return HeroService.transformationToHero(heroDocumentData);
       })) as Observable<Hero>;

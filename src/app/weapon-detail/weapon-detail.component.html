@@ -1,29 +1,29 @@
 <form [formGroup]="weaponForm" (ngSubmit)="save()">
-    <label for="hero-name">Hero name:</label>
-    <input type="text" id="hero-name" formControlName="name" placeholder="name">
+    <label for="weapon-name">Weapon name:</label>
+    <input type="text" id="weapon-name" formControlName="name" placeholder="name">
 
     <div id="divAttaque">
-      <label for="hero-attaque">Hero attaque: </label>
+      <label for="weapon-attaque">Weapon attaque: </label>
       <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
-        <input id="hero-attaque" value="attaque" matSliderThumb>
+        <input id="weapon-attaque" formControlName="attaque" matSliderThumb>
       </mat-slider>
     </div>
     <div id="divEsquive">
-      <label for="hero-esquive">Hero esquive: </label>
+      <label for="weapon-esquive">Weapon esquive: </label>
       <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
-        <input id="hero-esquive" value="esquive" matSliderThumb>
+        <input id="weapon-esquive" formControlName="esquive" matSliderThumb>
       </mat-slider>
     </div>
     <div id="divDegat">
-      <label for="hero-degats">Hero degats: </label>
+      <label for="weapon-degats">Weapon degats: </label>
       <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
-        <input id="hero-degats" value="degats" matSliderThumb>
+        <input id="weapon-degats" formControlName="degats" matSliderThumb>
       </mat-slider>
     </div>
     <div id="divId">
-      <label for="hero-pv">Hero pv: </label>
+      <label for="weapon-pv">Weapon pv: </label>
       <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">
-        <input id="hero-pv" value="pv" matSliderThumb>
+        <input id="weapon-pv" formControlName="pv" matSliderThumb>
       </mat-slider>
       <!-- Utilisez des contrôles du formulaire réaz"ctif pour les autres champs -->
     </div>

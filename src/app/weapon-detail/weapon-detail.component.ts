@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Weapon} from "../data/weapon";
 import {first} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {WeaponService} from "../service/weapon.service";
 import {Location} from "@angular/common";
 import {Hero} from "../data/hero";
+import {checkStatsIsOKValidator, forbiddenNameValidator} from "./reactive_form_validator";
 
 @Component({
   selector: 'app-weapon-detail',
@@ -24,11 +25,18 @@ export class WeaponDetailComponent implements OnInit{
               private location: Location) {
 
     this.weaponForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      attaque: [1, [Validators.min(-5), Validators.max(5)]],
-      esquive: [1, [Validators.min(-5), Validators.max(5)]],
-      degats: [1, [Validators.min(-5), Validators.max(5)]],
-      pv: [1, [Validators.min(-5), Validators.max(5)]]
+      name: new FormControl('', [Validators.required, forbiddenNameValidator(/bob/i)]),
+      attaque: new FormControl(0,[
+        Validators.required, Validators.min(-5), Validators.max(5) ]),
+      esquive: new FormControl(0,[
+        Validators.required, Validators.min(-5), Validators.max(5) ]),
+      degats: new FormControl(0,[
+        Validators.required, Validators.min(-5), Validators.max(5) ]),
+      pv: new FormControl(0,[
+        Validators.required, Validators.min(-5), Validators.max(5) ]),
+    },
+    {
+      validators: checkStatsIsOKValidator()
     });
   }
 
@@ -42,8 +50,8 @@ export class WeaponDetailComponent implements OnInit{
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.subGetweapon = this.weaponService.getWeapon(id).pipe(first())
         .subscribe(weapon => {
-          this.weapon = weapon
-          console.log(weapon)
+          this.weapon = weapon;
+          console.log(weapon);
             this.weaponForm.patchValue({
                 name: weapon.name,
                 attaque: weapon.attaque || 0,
@@ -70,9 +78,18 @@ export class WeaponDetailComponent implements OnInit{
     }
   save() {
     if (this.weaponForm.valid) {
+      if (this.weapon) {
+        this.weapon.name = this.weaponForm.value.name;
+        this.weapon.attaque = this.weaponForm.value.attaque;
+        this.weapon.esquive = this.weaponForm.value.esquive;
+        this.weapon.degats = this.weaponForm.value.degats;
+        this.weapon.PV = this.weaponForm.value.pv;
       // Accédez aux valeurs du reactif form
       const formData = this.weaponForm.value;
-      console.log(formData);
+        console.log(this.weapon);
+
+        let promise = this.weaponService.updateWeapon(this.weapon);}
+
       // Ajoutez la logique de sauvegarde ici
     }}
     delete(): void {

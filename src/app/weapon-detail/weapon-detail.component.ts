@@ -25,7 +25,7 @@ export class WeaponDetailComponent implements OnInit{
               private location: Location) {
 
     this.weaponForm = this.formBuilder.group({
-      name: new FormControl('', [Validators.required, forbiddenNameValidator(/bob/i)]),
+      name: new FormControl('', [Validators.required, forbiddenNameValidator(/flammenwerfer/i)]),
       attaque: new FormControl(0,[
         Validators.required, Validators.min(-5), Validators.max(5) ]),
       esquive: new FormControl(0,[
@@ -99,5 +99,8 @@ export class WeaponDetailComponent implements OnInit{
                 this.goBack();
             })
     }
-
+  ngOnDestroy(): void {
+    // Utilisation du cycle de vie du composant pour unsubscribe
+    this.subGetweapon?.unsubscribe();
+  }
 }

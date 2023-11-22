@@ -19,6 +19,6 @@ export function checkStatsIsOKValidator(): ValidatorFn
 
   const isValid = sum === 0;
 
-  return isValid ? null : { invalidSum: true };
+  return isValid ? null : { statsNotOK : true };
 };
 }

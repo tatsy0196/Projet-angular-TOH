@@ -27,6 +27,9 @@
       </mat-slider>
       <!-- Utilisez des contrôles du formulaire réaz"ctif pour les autres champs -->
     </div>
+  <div *ngIf="weaponForm.hasError('statsNotOK')">
+    Les statistiques ne sont pas valides. La somme des attaques, esquives, dégâts et PV doit être égale à zéro.
+  </div>
       <button id="save" type="submit" [disabled]="!weaponForm.valid">Save</button>
       <button type="button" (click)="goBack()">Go back</button>
       <button type="button" (click)="delete()">Delete</button>

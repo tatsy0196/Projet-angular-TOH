@@ -1,0 +1,11 @@
+/* styles.css */
+.container {
+  display: flex;
+  justify-content: space-between; /* Cela aligne les éléments à l'extrémité de chaque côté */
+}
+
+.box {
+  flex: 0 0 48%;
+  background-color: #f0f0f0;
+  margin: 5px;
+}

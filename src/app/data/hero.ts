@@ -1,3 +1,4 @@
+import {Weapon} from "./weapon";
 
 export class Hero {
 
@@ -7,8 +8,9 @@ export class Hero {
   esquive: number;
   degats: number;
   PV: number;
+  weapon?: string ; //une string parce que c'est l'id dans firebase pas l'objet
 
-  constructor(id: string = "id_test", name: string = "Doe", attaque: number = 10, esquive: number = 10, degats: number = 10, PV: number = 10) {
+  constructor(id: string = "id_test", name: string = "Doe", attaque: number = 10, esquive: number = 10, degats: number = 10, PV: number = 10 ) {
     this.id = id;
     this.name = name;
     this.attaque = attaque;

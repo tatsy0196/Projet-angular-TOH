@@ -3,8 +3,10 @@ import { Hero } from '../data/hero';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../service/hero.service';
+import {WeaponService} from "../service/weapon.service";
 import {subscriptionLogsToBeFn} from "rxjs/internal/testing/TestScheduler";
 import {first} from "rxjs";
+import {Weapon} from "../data/weapon";
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -16,6 +18,7 @@ export class HeroDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private heroService: HeroService,
+        private weaponService: WeaponService,
         private location: Location
     ) {
     }
@@ -26,6 +29,7 @@ export class HeroDetailComponent implements OnInit {
     pv: number = 10;
     subGetHero: any;
     id: string = '0';
+    weapon? : Weapon  ;
 
     ngOnInit(): void {
         this.getHero();
@@ -43,6 +47,12 @@ export class HeroDetailComponent implements OnInit {
             this.esquive = this.hero?.esquive || 10;
             this.degats = this.hero?.degats || 10;
             this.pv = this.hero?.PV || 10;
+            if(this.hero.weapon) {
+              this.subGetHero = this.weaponService.getWeapon(this.hero.weapon).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
+                .subscribe(weaponforhero => {
+                  this.weapon = weaponforhero || undefined;
+                });
+            }
         });
     }
 

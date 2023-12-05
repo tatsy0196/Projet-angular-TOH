@@ -1,4 +1,4 @@
-<div *ngIf="hero">
+<div *ngIf="hero" xmlns="http://www.w3.org/1999/html">
   <link rel="stylesheet" type="text/css" href="hero-detail.component.css">
   <h2>{{hero.name | uppercase}} Details with hero detail</h2>
   <div><span>id: </span>{{hero.id}}</div>
@@ -39,8 +39,18 @@
 
     </div>
     <div class="box"><h2>Equipement</h2>
-
-
+      <label *ngIf="weapon == undefined"> no weapons </label>
+      <br>
+      <select id="weapons" name="weapons" (change)="onChange($event)" [value]="">
+        <option></option>
+        <option *ngFor="let weapon of weapons"  value="{{weapon.id}}" >{{weapon.name}}</option>
+      </select>
+      <br>
+      <label *ngIf="selectedWeapon" > attaque {{selectedWeapon.attaque}}</label> <br>
+      <label *ngIf="selectedWeapon" > esquive {{selectedWeapon.esquive}}</label> <br>
+      <label *ngIf="selectedWeapon" > degats {{selectedWeapon.degats}}</label> <br>
+      <label *ngIf="selectedWeapon" > pv {{selectedWeapon.PV}}</label> <br>
+      <button (click)="equipedWeapon()"[disabled]="!canBeEquipedWeapon()">Ajouter Arme</button>
     </div>
   </div>
 

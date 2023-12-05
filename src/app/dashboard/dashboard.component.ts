@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnDestroy(): void {
 
-    // Utilisation du cycle de vie du composant pour unsubscribe
+    // Utilisation du cycle dfe vie du composant pour unsubscribe
     console.log("Destroy heroes component");
     this.subscriptionGetHeroes?.unsubscribe();
   }

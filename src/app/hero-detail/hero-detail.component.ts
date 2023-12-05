@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { HeroService } from '../service/hero.service';
 import {WeaponService} from "../service/weapon.service";
 import {subscriptionLogsToBeFn} from "rxjs/internal/testing/TestScheduler";
-import {first} from "rxjs";
+import {first, Subscription} from "rxjs";
 import {Weapon} from "../data/weapon";
 @Component({
   selector: 'app-hero-detail',
@@ -14,6 +14,9 @@ import {Weapon} from "../data/weapon";
 })
 export class HeroDetailComponent implements OnInit {
     hero: Hero | undefined;
+    subscriptionGetWeapons?: Subscription;
+    weapons: Weapon[] = [];
+    selectedWeapon: Weapon | undefined; // Variable pour stocker la valeur sélectionnée
 
     constructor(
         private route: ActivatedRoute,
@@ -22,7 +25,6 @@ export class HeroDetailComponent implements OnInit {
         private location: Location
     ) {
     }
-
     attaque: number = 1;
     esquive: number = 1;
     degats: number = 1;
@@ -34,6 +36,7 @@ export class HeroDetailComponent implements OnInit {
     ngOnInit(): void {
         this.getHero();
         this.id = String(this.route.snapshot.paramMap.get('id'));
+        this.getWeapons();
 
     }
 
@@ -53,8 +56,13 @@ export class HeroDetailComponent implements OnInit {
                   this.weapon = weaponforhero || undefined;
                 });
             }
+            console.log(this.weapon);
         });
     }
+  getWeapons(): void {
+    this.subscriptionGetWeapons =
+      this.weaponService.getWeapons().subscribe(weapons => this.weapons = weapons);
+  }
 
     getPointDeCompetence(): number {
         let allPointUse = -1;
@@ -63,7 +71,43 @@ export class HeroDetailComponent implements OnInit {
         }
         return 40 - allPointUse;
     }
+  onChange(event : Event) {
+    // Logique pour ajouter une arme ici
+    const eventObject = event.target as HTMLSelectElement ;
 
+    console.log(`Arme sélectionnée : ${eventObject}`);
+
+    this.subGetHero = this.weaponService.getWeapon(eventObject.value).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
+      .subscribe(weapon => {
+        this.selectedWeapon = weapon;
+      });    // Vous pouvez ajouter ici la logique pour effectuer des actions spécifiques avec l'arme sélectionnée
+
+
+  }
+
+  canBeEquipedWeapon() {
+    if (this.selectedWeapon) {
+      const possible =
+        (this.attaque + this.selectedWeapon.attaque >= 1 &&
+        this.esquive + this.selectedWeapon.esquive >= 1 &&
+        this.pv + this.selectedWeapon.PV >= 1 &&
+        this.degats + this.selectedWeapon.degats >= 1);
+      return possible ;
+    }else{ return false}
+  }
+  equipedWeapon() {
+    console.log(`Arme équipée : ${this.selectedWeapon}`);
+    if (this.selectedWeapon) {
+      if (this.canBeEquipedWeapon() ){
+
+        this.weapon = this.selectedWeapon ;
+        this.attaque = this.attaque + this.selectedWeapon.attaque;
+        this.esquive = this.esquive + this.selectedWeapon.esquive;
+        this.pv = this.pv + this.selectedWeapon.PV;
+        this.degats = this.degats + this.selectedWeapon.degats;
+      }
+    }
+  }
     formatLabel(value: number): string {
         if (value >= 1000) {
             return Math.round(value / 1000) + 'k';
@@ -111,4 +155,11 @@ export class HeroDetailComponent implements OnInit {
                 this.goBack();
             })
     }
+  ngOnDestroy(): void {
+
+    // Utilisation du cycle de vie du composant pour unsubscribe
+    console.log("Destroy weapons component");
+    this.subscriptionGetWeapons?.unsubscribe();
+    this.subGetHero.unsubscribe()
+  }
 }

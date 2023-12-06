@@ -5,14 +5,16 @@ export class Weapon {
   esquive: number;
   degats: number ;
   PV: number;
+  owner: string | undefined;
 
-  constructor(id: string = "id_test", name: string = "brindille", attaque: number = 0, esquive: number = 0, degats: number = 0, PV: number = 0) {
+  constructor(id: string = "id_test", name: string = "brindille", attaque: number = 0, esquive: number = 0, degats: number = 0, PV: number = 0, owner = undefined) {
   this.id = id;
   this.name = name;
   this.attaque = attaque;
   this.esquive = esquive;
   this.degats = degats;
   this.PV = PV;
+  this.owner = owner ;
 }
 
 isValide(): boolean {

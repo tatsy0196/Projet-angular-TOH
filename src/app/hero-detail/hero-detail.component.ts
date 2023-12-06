@@ -66,8 +66,16 @@ export class HeroDetailComponent implements OnInit {
 
     getPointDeCompetence(): number {
         let allPointUse = -1;
+
         if (this.hero) {
             allPointUse = this.attaque + this.pv + this.esquive + this.degats;
+            if(this.weapon){
+              const possible =
+                ( this.attaque + this.weapon.attaque >= 1 &&
+                  this.esquive + this.weapon.esquive >= 1 &&
+                  this.pv + this.weapon.PV >= 1 &&
+                  this.degats + this.weapon.degats >= 1);
+            }
         }
         return 40 - allPointUse;
     }
@@ -101,10 +109,6 @@ export class HeroDetailComponent implements OnInit {
       if (this.canBeEquipedWeapon() ){
 
         this.weapon = this.selectedWeapon ;
-        this.attaque = this.attaque + this.selectedWeapon.attaque;
-        this.esquive = this.esquive + this.selectedWeapon.esquive;
-        this.pv = this.pv + this.selectedWeapon.PV;
-        this.degats = this.degats + this.selectedWeapon.degats;
       }
     }
   }
@@ -126,17 +130,22 @@ export class HeroDetailComponent implements OnInit {
 
     save(): void {
         // Récupérez les valeurs du formulaire
-        const attaqueValue = this.attaque
-        const esquiveValue = this.esquive
-        const degatsValue = this.degats
-        const pvValue = this.pv
+        const attaqueValue = this.attaque ;
+        const esquiveValue = this.esquive ;
+        const degatsValue = this.degats ;
+        const pvValue = this.pv ;
+        const weaponEquiped =  this.weapon ;
 
-        // Mettez à jour les propriétés du héros avec les nouvelles valeurs
+      // Mettez à jour les propriétés du héros avec les nouvelles valeurs
         if (this.hero) {
             this.hero.attaque = attaqueValue;
             this.hero.esquive = esquiveValue;
             this.hero.degats = degatsValue;
             this.hero.PV = pvValue;
+            if (weaponEquiped) {
+              this.hero.weapon = weaponEquiped.id;
+              weaponEquiped.owner = this.hero.id ;
+            }
             let promise = this.heroService.updateHero(this.hero);
 
         }

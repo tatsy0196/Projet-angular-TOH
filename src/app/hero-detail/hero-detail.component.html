@@ -10,30 +10,30 @@
   <div class="container">
     <div class="box">
 
-      <h3>Statitisque of hero PC : {{getPointDeCompetence()}} </h3>
+      <h3>Statitisque of hero PC : {{getPointDeCompetence()}} </h3>  <label *ngIf="weapon">weapons equiped : {{weapon!.name}} </label>
       <div id="divAttaque">
         <label for="hero-attaque">Hero attaque: </label>
         <mat-slider min="1" max="30" step="1" discrete [displayWith]="formatLabel">
           <input id="hero-attaque" value="1" [(ngModel)]="attaque" matSliderThumb>
-        </mat-slider><label > {{attaque}}</label>
+        </mat-slider><label > {{attaque}} + {{weapon?.attaque}}  </label>  <label *ngIf="weapon" >= {{attaque + weapon!.attaque}}</label>
       </div>
       <div id="divEsquive">
         <label for="hero-esquive">Hero esquive: </label>
         <mat-slider min="1" max="30" step="1" discrete [displayWith]="formatLabel">
           <input id="hero-esquive" value="1" [(ngModel)]="esquive" matSliderThumb>
-        </mat-slider><label > {{esquive}}</label>
+        </mat-slider><label > {{esquive}} + {{weapon?.esquive}}  </label> <label *ngIf="weapon" >= {{esquive + weapon!.esquive}}</label>
       </div>
       <div id="divDegat">
         <label for="hero-degats">Hero degats: </label>
         <mat-slider min="1" max="30" step="1" discrete [displayWith]="formatLabel">
           <input id="hero-degats" value="1" [(ngModel)]="degats" matSliderThumb>
-        </mat-slider> <label > {{degats}}</label>
+        </mat-slider> <label > {{degats}} + {{weapon?.degats}} </label> <label *ngIf="weapon" >= {{degats + weapon!.degats}}</label>
       </div>
       <div id="divId">
         <label for="hero-pv">Hero pv: </label>
         <mat-slider min="1" max="30" step="1" discrete [displayWith]="formatLabel">
           <input id="hero-pv" value="1" [(ngModel)]="pv" matSliderThumb>
-        </mat-slider> <label > {{pv}}</label>
+        </mat-slider> <label > {{pv}} + {{weapon?.PV}}   </label> <label *ngIf="weapon"  >= {{pv + weapon!.PV}}</label>
       </div>
       <label *ngIf="checkStatIsNotOk()" class="error">Vous avez utilisé plus de 40 points de compétences </label> <br>
 

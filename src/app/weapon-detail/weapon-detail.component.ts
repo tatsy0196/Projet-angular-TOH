@@ -73,7 +73,7 @@ export class WeaponDetailComponent implements OnInit{
                   esquive: weapon.esquive || 0,
                   degats: weapon.degats || 0,
                   pv: weapon.PV || 0,
-                  owner: hero // Assurez-vous que 'owner' correspond au nom de la propriété dans votre modèle
+                  owner: hero
                 });
               });
         } else {
@@ -84,10 +84,14 @@ export class WeaponDetailComponent implements OnInit{
             esquive: weapon.esquive || 0,
             degats: weapon.degats || 0,
             pv: weapon.PV || 0,
-            owner: '' // Ou toute valeur par défaut appropriée si l'arme n'a pas de propriétaire
+            owner: '' // valeur par défaut
           });
         }
       });
+  }
+
+  getNameHero() : string{
+    return this.weaponForm.value.owner.name ;
   }
 
   formatLabel(value: number): string {
@@ -120,9 +124,9 @@ export class WeaponDetailComponent implements OnInit{
       // Ajoutez la logique de sauvegarde ici
     }}
     delete(): void {
-      // if(this.weapon?.owner){
-      //   this.updateOwner();
-      // }
+       if(this.weapon?.owner){
+         this.updateOwner();
+       }
         this.weaponService.deleteWeapon(this.id)
             .then(w => {
                 console.log( this.id , 'à été suprimé');

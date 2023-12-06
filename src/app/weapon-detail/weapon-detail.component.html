@@ -1,7 +1,7 @@
 <form [formGroup]="weaponForm" (ngSubmit)="save()">
     <label for="weapon-name">Weapon name:</label>
     <input type="text" id="weapon-name" formControlName="name" placeholder="name">
-  <h3 *ngIf="weapon?.owner">Possédé par {{ weapon?.owner }}</h3>
+  <h3 *ngIf="weaponForm.get('owner')?.value">Possédé par {{ getNameHero() }}</h3>
   <div id="divAttaque">
       <label for="weapon-attaque">Weapon attaque: </label>
       <mat-slider min="-5" max="5" step="1" discrete [displayWith]="formatLabel">

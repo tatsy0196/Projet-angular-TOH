@@ -35,7 +35,7 @@
           <input id="hero-pv" value="1" [(ngModel)]="pv" matSliderThumb>
         </mat-slider> <label > {{pv}} + {{weapon?.PV}}   </label> <label *ngIf="weapon"  >= {{pv + weapon!.PV}}</label>
       </div>
-      <label *ngIf="checkStatIsNotOk()" class="error">Vous avez utilisé plus de 40 points de compétences </label> <br>
+      <label *ngIf="checkStatIsNotOk()" class="error">You have used more than 40 skill points or one skill and less than 1</label> <br>
 
     </div>
     <div class="box"><h2>Equipement</h2>

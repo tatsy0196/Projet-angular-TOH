@@ -69,13 +69,7 @@ export class HeroDetailComponent implements OnInit {
 
         if (this.hero) {
             allPointUse = this.attaque + this.pv + this.esquive + this.degats;
-            if(this.weapon){
-              const possible =
-                ( this.attaque + this.weapon.attaque >= 1 &&
-                  this.esquive + this.weapon.esquive >= 1 &&
-                  this.pv + this.weapon.PV >= 1 &&
-                  this.degats + this.weapon.degats >= 1);
-            }
+
         }
         return 40 - allPointUse;
     }
@@ -122,9 +116,17 @@ export class HeroDetailComponent implements OnInit {
 
     checkStatIsNotOk(): boolean {
         if (this.getPointDeCompetence() < 0) {
-            return true
+
+            return true ;
         } else {
-            return false
+          if(this.weapon) {
+            const possible =
+              (this.attaque + this.weapon.attaque >= 1 && this.esquive + this.weapon.esquive >= 1 && this.pv + this.weapon.PV >= 1 && this.degats + this.weapon.degats >= 1);
+            return !possible;
+
+          }else {
+            return false;
+          }
         }
     }
 

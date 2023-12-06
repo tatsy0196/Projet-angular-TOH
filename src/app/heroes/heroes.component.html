@@ -1,9 +1,28 @@
 <h2>My Heroes</h2>
 <ul class="heroes">
-  <button id="createHeroes" (click)="createHero()"> Create hero</button>
-  <li *ngFor="let hero of heroes">
+
+  <button (click)="sortHeroesByAttack()">sort by attaque</button>
+  <button (click)="sortHeroesByPV()">sort by PV</button>
+  <button (click)="sortHeroesByDegats()">sort by degats</button>
+  <button (click)="sortHeroesByEsquive()">sort by esquive</button>
+<br>
+  <input type="number" id="attaqueFilter" [(ngModel)]="FilterValue" />
+  <button (click)="filterByAttaque()">Filter attaque</button>
+  <button (click)="filterByPV()">Filter pv</button>
+  <button (click)="filterByDegats()">Filter degat</button>
+  <button (click)="filterByEsquive()">Filter esquive</button>
+  <button (click)="resetFilter()">Filter reset</button>
+
+
+  <li *ngFor="let hero of filteredHeroes">
     <a routerLink="/heroDetail/{{hero.id}}">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
+      <span class="badge">{{hero.name}}   </span>
+      <span>stats : Attaque: '{{hero.attaque}}',</span>
+      <span>  Degats : '{{hero.degats}}',</span>
+      <span>  Esquive : '{{hero.esquive}}',</span>
+      <span>PV: '{{hero.PV}}',</span>
     </a>
   </li>
+  <button id="createHeroes" (click)="createHero()"> Create hero</button>
+
 </ul>

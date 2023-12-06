@@ -140,7 +140,7 @@ export class WeaponDetailComponent implements OnInit{
       this.subGetweapon = this.heroService.getHero(this.weapon!.owner).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
         .subscribe(hero => {
 
-      hero.weapon = undefined; // Supprimez la référence de l'arme chez le propriétaire
+      hero.weapon = ""; // Supprimez la référence de l'arme chez le propriétaire
           this.heroService.updateHero(hero).then(updatedHero => {
           console.log('Propriétaire mis à jour :', updatedHero);
         })

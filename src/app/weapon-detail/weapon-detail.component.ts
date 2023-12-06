@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {WeaponService} from "../service/weapon.service";
 import {Location} from "@angular/common";
 import {Hero} from "../data/hero";
+import {HeroService} from "../service/hero.service";
 import {checkStatsIsOKValidator, forbiddenNameValidator} from "./reactive_form_validator";
 
 @Component({
@@ -22,7 +23,9 @@ export class WeaponDetailComponent implements OnInit{
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private weaponService: WeaponService,
-              private location: Location) {
+              private heroService: HeroService,
+              private location: Location
+  ) {
 
     this.weaponForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required, forbiddenNameValidator(/flammenwerfer/i)]),
@@ -34,6 +37,7 @@ export class WeaponDetailComponent implements OnInit{
         Validators.required, Validators.min(-5), Validators.max(5) ]),
       pv: new FormControl(0,[
         Validators.required, Validators.min(-5), Validators.max(5) ]),
+      owner: new FormControl('', Validators.required),
     },
     {
       validators: checkStatsIsOKValidator()
@@ -57,8 +61,8 @@ export class WeaponDetailComponent implements OnInit{
                 attaque: weapon.attaque || 0,
                 esquive: weapon.esquive || 0 ,
                 degats: weapon.degats || 0,
-                pv: weapon.PV || 0
-
+                pv: weapon.PV || 0,
+                owner: weapon.owner || '' // Assurez-vous que owner est une chaîne, ajustez si nécessaire
         });
   })
   }
@@ -93,12 +97,35 @@ export class WeaponDetailComponent implements OnInit{
       // Ajoutez la logique de sauvegarde ici
     }}
     delete(): void {
+        if(this.weapon?.owner){
+          this.updateOwner();
+        }
         this.weaponService.deleteWeapon(this.id)
             .then(w => {
                 console.log( this.id , 'à été suprimé');
                 this.goBack();
             })
     }
+
+  updateOwner(): void {
+    // Supposons que vous ayez un service pour gérer les héros (HeroService)
+    // et une méthode updateHero pour mettre à jour un héros
+    if(this.weapon?.owner) {
+      this.subGetweapon = this.heroService.getHero(this.weapon!.owner).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
+        .subscribe(hero => {
+
+      hero.weapon = undefined; // Supprimez la référence de l'arme chez le propriétaire
+          this.heroService.updateHero(hero)        .then(updatedHero => {
+          console.log('Propriétaire mis à jour :', updatedHero);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la mise à jour du propriétaire :', error);
+        });
+        });
+    }
+  }
+
+
   ngOnDestroy(): void {
     // Utilisation du cycle de vie du composant pour unsubscribe
     this.subGetweapon?.unsubscribe();

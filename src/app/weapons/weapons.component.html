@@ -1,9 +1,20 @@
 <h2>My weapons</h2>
 <ul class="Weapons">
-    <button id="createweapons" (click)="createWeapon()"> Create weapons</button>
-    <li *ngFor="let weapon of weapons">
-        <a routerLink="/weaponDetail/{{weapon.id}}">
-            <span class="badge">{{weapon.id}}</span> {{weapon.name}}
-        </a>
+  <button (click)="sortHeroesByAttack()">sort by attaque</button>
+  <button (click)="sortHeroesByPV()">sort by PV</button>
+  <button (click)="sortHeroesByDegats()">sort by degats</button>
+  <button (click)="sortHeroesByEsquive()">sort by esquive</button>
+  <br>
+  <input type="number" id="attaqueFilter" [(ngModel)]="FilterValue" />
+  <button (click)="filterByAttaque()">Filter attaque</button>
+  <button (click)="filterByPV()">Filter pv</button>
+  <button (click)="filterByDegats()">Filter degat</button>
+  <button (click)="filterByEsquive()">Filter esquive</button>
+  <button (click)="resetFilter()">Filter reset</button>
+    <li *ngFor="let weapon of filteredWeapons">
+      <a routerLink="/weaponDetail/{{weapon.id}}">
+        <span class="badge">{{weapon.id}}</span> {{weapon.name}}
+      </a>
     </li>
+  <button id="createweapons" (click)="createWeapon()"> Create weapons</button>
 </ul>

@@ -37,7 +37,7 @@ export class WeaponDetailComponent implements OnInit{
         Validators.required, Validators.min(-5), Validators.max(5) ]),
       pv: new FormControl(0,[
         Validators.required, Validators.min(-5), Validators.max(5) ]),
-      owner: new FormControl('', Validators.required),
+      owner: new FormControl(''),
     },
     {
       validators: checkStatsIsOKValidator()
@@ -61,8 +61,7 @@ export class WeaponDetailComponent implements OnInit{
                 attaque: weapon.attaque || 0,
                 esquive: weapon.esquive || 0 ,
                 degats: weapon.degats || 0,
-                pv: weapon.PV || 0,
-                owner: weapon.owner || '' // Assurez-vous que owner est une chaîne, ajustez si nécessaire
+                pv: weapon.PV || 0
         });
   })
   }
@@ -97,9 +96,9 @@ export class WeaponDetailComponent implements OnInit{
       // Ajoutez la logique de sauvegarde ici
     }}
     delete(): void {
-        if(this.weapon?.owner){
-          this.updateOwner();
-        }
+      // if(this.weapon?.owner){
+      //   this.updateOwner();
+      // }
         this.weaponService.deleteWeapon(this.id)
             .then(w => {
                 console.log( this.id , 'à été suprimé');

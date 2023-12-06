@@ -53,17 +53,41 @@ export class WeaponDetailComponent implements OnInit{
   getWeapon(): void {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.subGetweapon = this.weaponService.getWeapon(id).pipe(first())
-        .subscribe(weapon => {
-          this.weapon = weapon;
-          console.log(weapon);
-            this.weaponForm.patchValue({
-                name: weapon.name,
-                attaque: weapon.attaque || 0,
-                esquive: weapon.esquive || 0 ,
-                degats: weapon.degats || 0,
-                pv: weapon.PV || 0
-        });
-  })
+      .subscribe(weapon => {
+        this.weapon = weapon;
+        console.log(weapon);
+        console.log(weapon);
+        console.log(weapon);
+
+        // Récupération du héros via l'ID
+        if (this.weapon?.owner) {
+          this.heroService.getHero(this.weapon.owner).pipe(first())
+            .subscribe(
+              hero => {
+                console.log('Héros récupéré avec succès :', hero);
+
+                // Mettez à jour le formulaire avec les données récupérées
+                this.weaponForm.patchValue({
+                  name: weapon.name,
+                  attaque: weapon.attaque || 0,
+                  esquive: weapon.esquive || 0,
+                  degats: weapon.degats || 0,
+                  pv: weapon.PV || 0,
+                  owner: hero // Assurez-vous que 'owner' correspond au nom de la propriété dans votre modèle
+                });
+              });
+        } else {
+          // Si l'arme n'a pas de propriétaire, mettez à jour le formulaire sans l'information du propriétaire
+          this.weaponForm.patchValue({
+            name: weapon.name,
+            attaque: weapon.attaque || 0,
+            esquive: weapon.esquive || 0,
+            degats: weapon.degats || 0,
+            pv: weapon.PV || 0,
+            owner: '' // Ou toute valeur par défaut appropriée si l'arme n'a pas de propriétaire
+          });
+        }
+      });
   }
 
   formatLabel(value: number): string {
@@ -107,14 +131,13 @@ export class WeaponDetailComponent implements OnInit{
     }
 
   updateOwner(): void {
-    // Supposons que vous ayez un service pour gérer les héros (HeroService)
     // et une méthode updateHero pour mettre à jour un héros
     if(this.weapon?.owner) {
       this.subGetweapon = this.heroService.getHero(this.weapon!.owner).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
         .subscribe(hero => {
 
       hero.weapon = undefined; // Supprimez la référence de l'arme chez le propriétaire
-          this.heroService.updateHero(hero)        .then(updatedHero => {
+          this.heroService.updateHero(hero).then(updatedHero => {
           console.log('Propriétaire mis à jour :', updatedHero);
         })
         .catch(error => {

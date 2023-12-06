@@ -147,6 +147,10 @@ export class HeroDetailComponent implements OnInit {
             if (weaponEquiped) {
               this.hero.weapon = weaponEquiped.id;
               weaponEquiped.owner = this.hero.id ;
+              console.log(weaponEquiped);
+              this.weaponService.updateWeapon(weaponEquiped).then(updateWeapon => {
+                console.log('arme mis à jour :', updateWeapon);
+              })
             }
             let promise = this.heroService.updateHero(this.hero);
 

@@ -101,6 +101,17 @@ export class HeroDetailComponent implements OnInit {
     console.log(`Arme équipée : ${this.selectedWeapon}`);
     if (this.selectedWeapon) {
       if (this.canBeEquipedWeapon() ){
+        if (this.hero?.weapon) {
+
+          const previousWeapon = this.weapons.find(w => w.id === this.hero!.weapon);
+          if (previousWeapon) {
+            previousWeapon.owner = '';
+            // Update the previous weapon
+            this.weaponService.updateWeapon(previousWeapon).then(updatedPreviousWeapon => {
+              console.log('Previous weapon updated:', updatedPreviousWeapon);
+            });
+          }
+        }
 
         this.weapon = this.selectedWeapon ;
       }
@@ -164,6 +175,16 @@ export class HeroDetailComponent implements OnInit {
     }
 
     delete(): void {
+      if (this.hero?.weapon) {
+        const previousWeapon = this.weapons.find(w => w.id === this.hero!.weapon);
+        if (previousWeapon) {
+          previousWeapon.owner = '';
+          // Update the previous weapon
+          this.weaponService.updateWeapon(previousWeapon).then(updatedPreviousWeapon => {
+            console.log('Previous weapon updated:', updatedPreviousWeapon);
+          });
+        }
+      }
         this.heroService.deleteHero(this.id)
             .then(h => {
                 console.log( this.id , 'à été suprimé');

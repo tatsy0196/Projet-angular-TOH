@@ -98,11 +98,10 @@ export class HeroDetailComponent implements OnInit {
     }else{ return false}
   }
   equipedWeapon() {
-    console.log(`Arme équipée : ${this.selectedWeapon}`);
+    console.log(`Arme équipée : ${this.selectedWeapon}` );
     if (this.selectedWeapon) {
       if (this.canBeEquipedWeapon() ){
         if (this.hero?.weapon) {
-
           const previousWeapon = this.weapons.find(w => w.id === this.hero!.weapon);
           if (previousWeapon) {
             previousWeapon.owner = '';
@@ -112,8 +111,21 @@ export class HeroDetailComponent implements OnInit {
             });
           }
         }
+        if (this.selectedWeapon.owner != null && this.selectedWeapon.owner != "") {
+          this.subGetHero = this.heroService.getHero(this.selectedWeapon.owner).pipe(first()) //recupere que la premiere valeur envoyer à l'observable
+            .subscribe(hero => {
 
+              hero.weapon = ""; // Supprimez la référence de l'arme chez le propriétaire
+              this.heroService.updateHero(hero).then(updatedHero => {
+                console.log('Propriétaire mis à jour :', updatedHero);
+              });
+            });
+        }
         this.weapon = this.selectedWeapon ;
+        if (this.hero) {
+          this.hero.weapon = this.weapon.id;
+          let promise = this.heroService.updateHero(this.hero);
+        }
       }
     }
   }
